@@ -109,10 +109,9 @@ export function useViewportColumns<R, SR>({
     };
   }, [rawColumns, rawGroupBy, defaultFormatter, defaultResizable, defaultSortable]);
 
-  const { cssColumnVars, totalColumnWidth, columnWidthMap, columnLeftMap } = useMemo(() => {
+  const { totalColumnWidth, columnWidthMap, columnLeftMap } = useMemo(() => {
     const columnWidthMap = new Map<Column<R, SR>, number>();
     const columnLeftMap = new Map<Column<R, SR>, number>();
-    const cssColumnVars: Record<string, string> = Object.create(null);
     let left = 0;
     let totalColumnWidth = 0;
     let allocatedWidths = 0;
@@ -145,14 +144,12 @@ export function useViewportColumns<R, SR>({
         columnWidthMap.set(column, width);
       }
       const { key } = column;
-      cssColumnVars[`--column-width-${key}`] = `${width}px`;
-      cssColumnVars[`--column-left-${key}`] = `${left}px`;
       columnLeftMap.set(column, left);
       totalColumnWidth += width;
       left += width;
     }
 
-    return { cssColumnVars, totalColumnWidth, columnLeftMap, columnWidthMap };
+    return { totalColumnWidth, columnLeftMap, columnWidthMap };
   }, [columnWidths, columns, viewportWidth, minColumnWidth]);
 
   let totalFrozenColumnWidth = 0;
@@ -219,6 +216,14 @@ export function useViewportColumns<R, SR>({
 
     return viewportColumns;
   }, [colOverscanEndIdx, colOverscanStartIdx, columns]);
+
+
+  const cssColumnVars: Record<string, string> = Object.create(null);
+  for (const column of viewportColumns) {
+    const { key } = column;
+    cssColumnVars[`--column-width-${key}`] = `${columnWidthMap.get(column)}px`;
+    cssColumnVars[`--column-left-${key}`] = `${columnLeftMap.get(column)}px`;
+  }
 
   return { columns, viewportColumns, totalColumnWidth, lastFrozenColumnIndex, totalFrozenColumnWidth, groupBy, cssColumnVars };
 }
