@@ -76,8 +76,8 @@ export default function HeaderCell<R, SR>({
     'rdg-cell-frozen-last': column.isLastFrozenColumn
   });
   const style: React.CSSProperties = {
-    width: column.width,
-    left: column.left
+    width: `var(--column-width-${column.key})`,
+    left: `var(--column-left-${column.key})`
   };
 
   cell = (

@@ -57,8 +57,8 @@ export interface Column<TRow, TSummaryRow = unknown> {
 
 export interface CalculatedColumn<TRow, TSummaryRow = unknown> extends Column<TRow, TSummaryRow> {
   idx: number;
-  width: number;
-  left: number;
+  // width: number;
+  // left: number;
   resizable: boolean;
   sortable: boolean;
   isLastFrozenColumn?: boolean;

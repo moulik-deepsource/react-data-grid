@@ -68,8 +68,8 @@ function Cell<R, SR>({
       ref={useCombinedRefs(cellRef, ref)}
       className={className}
       style={{
-        width: column.width,
-        left: column.left
+        width: `var(--column-width-${column.key})`,
+        left: `var(--column-left-${column.key})`
       }}
       onClick={wrapEvent(handleClick, onClick)}
       onDoubleClick={wrapEvent(handleDoubleClick, onDoubleClick)}

@@ -247,7 +247,7 @@ function DataGrid<R, SR>({
   const clientHeight = gridHeight - totalHeaderHeight - summaryRowsCount * rowHeight;
   const isSelectable = selectedRows !== undefined && onSelectedRowsChange !== undefined;
 
-  const { columns, viewportColumns, totalColumnWidth, lastFrozenColumnIndex, totalFrozenColumnWidth, groupBy } = useViewportColumns({
+  const { columns, viewportColumns, totalColumnWidth, lastFrozenColumnIndex, totalFrozenColumnWidth, groupBy, cssColumnVars } = useViewportColumns({
     rawColumns,
     columnWidths,
     scrollLeft,
@@ -880,7 +880,8 @@ function DataGrid<R, SR>({
         '--header-row-height': `${headerRowHeight}px`,
         '--filter-row-height': `${headerFiltersHeight}px`,
         '--row-width': `${totalColumnWidth}px`,
-        '--row-height': `${rowHeight}px`
+        '--row-height': `${rowHeight}px`,
+        ...cssColumnVars
       } as unknown as React.CSSProperties}
       ref={gridRef}
       onScroll={handleScroll}
