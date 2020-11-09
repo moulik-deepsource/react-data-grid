@@ -137,7 +137,13 @@ export function useViewportColumns<R, SR>({
     );
 
     for (const column of columns) {
-      const width = columnWidthMap.get(column) ?? clampColumnWidth(unallocatedColumnWidth, column, minColumnWidth);
+      let width;
+      if (columnWidthMap.has(column)) {
+        width = columnWidthMap.get(column)!;
+      } else {
+        width = clampColumnWidth(unallocatedColumnWidth, column, minColumnWidth);
+        columnWidthMap.set(column, width);
+      }
       const { key } = column;
       cssColumnVars[`--column-width-${key}`] = `${width}px`;
       cssColumnVars[`--column-left-${key}`] = `${left}px`;
@@ -152,7 +158,6 @@ export function useViewportColumns<R, SR>({
   let totalFrozenColumnWidth = 0;
   if (lastFrozenColumnIndex !== -1) {
     const lastFrozenColumn = columns[lastFrozenColumnIndex];
-    // lastFrozenColumn.isLastFrozenColumn = true;
     totalFrozenColumnWidth = columnLeftMap.get(lastFrozenColumn)! + columnWidthMap.get(lastFrozenColumn)!;
   }
 

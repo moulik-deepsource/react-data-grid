@@ -13,7 +13,7 @@ module.exports = function({ config, mode }) {
       options: { cacheDirectory: !isProd }
     }, {
       loader: 'ts-loader',
-      options: { onlyCompileBundledFiles: true }
+      options: { onlyCompileBundledFiles: true, transpileOnly: true }
     }]
   }, {
     test: /\.less$/,
